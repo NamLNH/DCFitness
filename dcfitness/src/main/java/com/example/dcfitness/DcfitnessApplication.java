@@ -37,10 +37,10 @@ public class DcfitnessApplication {
 					"Feb 21 2024",
 					"Billy Juice"));
 			
-			//exercise (name, description, difficult level)
-			categoryRepo.save(new Category("Cardio",
-					"",
-					""));
+			//categories (name)
+			categoryRepo.save(new Category("Cardio"));
+			categoryRepo.save(new Category("Strength"));
+			categoryRepo.save(new Category("Flexibility"));
 		};
 		
 	}

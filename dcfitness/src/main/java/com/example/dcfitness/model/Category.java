@@ -17,21 +17,18 @@ public class Category {
 	private long id;
 	
 	@Column(name ="name")
-	private String name;
-	@Column(name ="description")
-	private String description;
-	@Column(name ="difficultLevel")
-	private String difficultLevel;
+	private String name;	
 	
 	
-	public Category () {
-		
+	public Category () {		
 	}
-	public Category (String name, String description, String difficultLevel) {
-		this.name = name;
-		this.description = description;
-		this.difficultLevel = difficultLevel;
-		
+	public Category (String name) {
+		this.name = name;		
+	}
+	
+	
+	public long getId() {
+		return id;
 	}
 	public String getName() {
 		return name;
@@ -39,20 +36,6 @@ public class Category {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public String getDifficultLevel() {
-		return difficultLevel;
-	}
-	public void setDifficultLevel(String difficultLevel) {
-		this.difficultLevel = difficultLevel;
-	}
-	public long getId() {
-		return id;
-	}
+	
 	
 }
