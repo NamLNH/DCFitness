@@ -1,4 +1,4 @@
-package com.example.crs.controller;
+package com.example.dcfitness.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.crs.model.AchievementRepository;
-import com.example.crs.model.Achievements;
+import com.example.dcfitness.model.AchievementRepository;
+import com.example.dcfitness.model.Achievements;
 @RestController
 public class AchievementsController {
 	@Autowired

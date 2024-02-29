@@ -1,4 +1,4 @@
-package com.example.crs.model;
+package com.example.dcfitness.model;
 
 import java.util.ArrayList;
 import java.util.List;

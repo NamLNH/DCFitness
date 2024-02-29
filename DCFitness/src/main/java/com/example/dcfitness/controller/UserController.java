@@ -1,4 +1,4 @@
-package com.example.crs.controller;
+package com.example.dcfitness.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.crs.model.User;
-import com.example.crs.model.UserRepository;
+import com.example.dcfitness.model.User;
+import com.example.dcfitness.model.UserRepository;
 
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
