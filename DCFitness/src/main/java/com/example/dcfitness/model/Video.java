@@ -1,5 +1,7 @@
 package com.example.dcfitness.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,8 +34,9 @@ public class Video {
 	@Column(name ="author")
 	private String author;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn (name ="category_id", referencedColumnName ="id")
+	//@JsonIgnore
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+	@JoinColumn (name ="category_id",nullable = false, referencedColumnName ="id")
 	private Category category;
 	
 	public Video () {
@@ -46,6 +49,14 @@ public class Video {
 		this.uploadDate = uploadDate;
 		this.author = author;
 		this.category = category;
+	}
+	public Video (String title, String url, String thumbnail, String uploadDate, String author) {
+		this.title = title;
+		this.url = url;
+		this.thumbnail = thumbnail;
+		this.uploadDate = uploadDate;
+		this.author = author;
+		
 	}
 	
 	public long getId() {
@@ -88,8 +99,4 @@ public class Video {
 		this.category = category;
 	}
 	
-	
-	
-	
-
 }

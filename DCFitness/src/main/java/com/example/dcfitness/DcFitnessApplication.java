@@ -1,5 +1,8 @@
 package com.example.dcfitness;
 
+import java.util.ArrayList;
+import java.util.Optional;
+
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -47,31 +50,40 @@ public class DcFitnessApplication {
 			categoryRepository.save(new Category("Cardio"));
 			categoryRepository.save(new Category("Strength"));
 			categoryRepository.save(new Category("Flexibility"));
-			
-			//video (title, url, thumbnail, uploadDate, author)
-			videoRepository.save(new Video("20 MIN FULL BODY WORKOUT FOR BEGINNERS",
+			//new videos
+			//String title, String url, String thumbnail, String uploadDate, String author
+			Video video1 = initNewVideo(categoryRepository,Long.parseLong("1"),
+					new Video("20 MIN FULL BODY WORKOUT FOR BEGINNERS",
 					"https://youtu.be/iCQ2gC4DqJw",
 					"",
-					"Feb 21 2024",
-					"Billy Juice",
-					new Category("Cardio")));
-			videoRepository.save(new Video("10 MINUTE MORNING WORKOUT",
-					"https://youtu.be/3sEeVJEXTfY?list=PLjngT6yRRZHPsjj-CIduSL9FpclppM9qm",
-					"",
-					"Feb 21 2024",
-					"Billy Juice",
-					new Category("Cardio")));
-			videoRepository.save(new Video("5 MINUTE BEDTIME WORKOUT",
-					"https://youtu.be/5Q4ewnHMNW8?list=PLjngT6yRRZHPsjj-CIduSL9FpclppM9qm",
-					"",
-					"Feb 21 2024",
-					"Billy Juice",
-					new Category("Cardio")));
-
-            //achRepo.findAll().forEach(System.out::println);
-			
-			//userRepo.findAll().forEach(System.out::println);
+					"3/3/2024",
+					"Nam"));
+			//videoRepository.save(initNewVideo(categoryRepository,Long.parseLong("1"),video1));
+			System.out.println(video1.getCategory().getName());
+			System.out.println(video1.getAuthor());
+			try {
+				videoRepository.save(video1);
+			} catch (Exception e) {
+				System.out.println("error in saving to database");
+				System.out.println(e.getMessage());
+			}
 		};
 	}
-
+	public static Video initNewVideo(CategoryRepository categoryRepo, Long categoryId, Video video) {
+		try {
+			Optional<Category> _category = categoryRepo.findById(categoryId);
+			
+			if(_category.isPresent())
+			{
+				video.setCategory(_category.get());
+			}
+			else {
+				System.out.println("Cant find the category in list");
+			}
+		} catch (Exception e) {
+			System.out.println("Error in getting category from database");
+		}
+			
+		return video;
+	}
 }
