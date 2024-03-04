@@ -1,5 +1,8 @@
 package com.example.dcfitness.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -10,6 +13,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -38,6 +43,14 @@ public class Video {
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinColumn (name ="category_id",nullable = false, referencedColumnName ="id")
 	private Category category;
+	
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable (
+		name ="video_bodypart",
+		joinColumns = @JoinColumn(name = "video_id", nullable = false, referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name = "bodypart_id", nullable = false, referencedColumnName ="id") 
+	)
+	private Set<BodyPart> bodyParts = new HashSet<>();
 	
 	public Video () {
 		
@@ -98,5 +111,12 @@ public class Video {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
+	public Set<BodyPart> getBodyParts() {
+		return bodyParts;
+	}
+	public void assignBodyPart(BodyPart part) {
+		this.bodyParts.add(part);
+	}
+	
 	
 }

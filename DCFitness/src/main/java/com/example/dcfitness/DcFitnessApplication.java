@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Bean;
 
 import com.example.dcfitness.model.AchievementRepository;
 import com.example.dcfitness.model.Achievements;
+import com.example.dcfitness.model.BodyPart;
+import com.example.dcfitness.model.BodyPartRepository;
 import com.example.dcfitness.model.User;
 import com.example.dcfitness.model.UserRepository;
 import com.example.dcfitness.model.Video;
@@ -28,7 +30,8 @@ public class DcFitnessApplication {
 	ApplicationRunner init(UserRepository userRepo,
 			AchievementRepository achRepo,
 			VideoRepository videoRepository,
-			CategoryRepository categoryRepository) {
+			CategoryRepository categoryRepository,
+			BodyPartRepository bodyPartRepository) {
 		return args -> {
 			
 			User yash = new User("YashManiar","BCOne","yashmr@student.douglascollege.ca");
@@ -50,6 +53,12 @@ public class DcFitnessApplication {
 			categoryRepository.save(new Category("Cardio"));
 			categoryRepository.save(new Category("Strength"));
 			categoryRepository.save(new Category("Flexibility"));
+			
+			//body parts (name)
+			bodyPartRepository.save(new BodyPart("All body"));
+			bodyPartRepository.save(new BodyPart("Upper body"));
+			bodyPartRepository.save(new BodyPart("Lower body"));
+			
 			//new videos
 			//String title, String url, String thumbnail, String uploadDate, String author
 			Video video1 = initNewVideo(categoryRepository,Long.parseLong("1"),
@@ -58,11 +67,18 @@ public class DcFitnessApplication {
 					"",
 					"3/3/2024",
 					"Nam"));
+			Video video2 = initNewVideo(categoryRepository,Long.parseLong("2"),
+					new Video("10 MINUTE MORNING WORKOUT",
+					"https://youtu.be/3sEeVJEXTfY?list=PLjngT6yRRZHPsjj-CIduSL9FpclppM9qm",
+					"",
+					"3/3/2024",
+					"John"));
 			//videoRepository.save(initNewVideo(categoryRepository,Long.parseLong("1"),video1));
 			System.out.println(video1.getCategory().getName());
 			System.out.println(video1.getAuthor());
 			try {
 				videoRepository.save(video1);
+				videoRepository.save(video2);
 			} catch (Exception e) {
 				System.out.println("error in saving to database");
 				System.out.println(e.getMessage());

@@ -10,10 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.dcfitness.model.BodyPart;
+import com.example.dcfitness.model.BodyPartRepository;
 import com.example.dcfitness.model.Category;
 import com.example.dcfitness.model.CategoryRepository;
 import com.example.dcfitness.model.Video;
@@ -28,6 +31,9 @@ public class VideoController {
 	
 	@Autowired
 	CategoryRepository categoryRepository;
+	
+	@Autowired
+	BodyPartRepository bodyPartRepository;
 	
 	//GET API for all videos
 	@GetMapping("/videos")
@@ -45,23 +51,47 @@ public class VideoController {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-	}
-	
-	
+	}	
 	
 	//API Get all video with category filter
-	@GetMapping("/videos/category/{category}")
-	public ResponseEntity<List<Video>> getVideosByCategory(@PathVariable("category") String category){
+	@GetMapping("/videos/category/{categoryId}")
+	public ResponseEntity<List<Video>> getVideosByCategory(@PathVariable("categoryId") Long categoryId){
+		ArrayList<Video> videos = new ArrayList<Video>();
+		try {
+			videoRepository.findByCategoryId(categoryId).forEach(videos::add);
+			if(videos.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+			return new ResponseEntity<>(videos, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}	
+		
+	}	
+	
+	
+	//API Assign body part to video
+	@PutMapping("/videos/{videoId}/bodyparts/{bodyPartId}")
+	public ResponseEntity<Video> assignBodyPart(
+			@PathVariable("videoId") Long videoId,
+			@PathVariable("bodyPartId") Long bodyPartId) {
 		
 		try {
-			Optional<Category> categoryReturn = categoryRepository.findByName(category);
-		} catch (Exception e) {
+			Optional<Video> _video = videoRepository.findById(videoId);
+			Optional<BodyPart> _part = bodyPartRepository.findById(bodyPartId);
+			if(_video.isPresent() && _part.isPresent()) {
+				Video video = _video.get();
+				BodyPart part = _part.get();
+				video.assignBodyPart(part);
+				return new ResponseEntity<>(videoRepository.save(video),HttpStatus.OK);
+			}
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			
+		} catch (Exception e) {
+			System.out.println("Error in query video and body part");
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
-		return null;
 	}
 	
-	//API for POST new video
 
 }
