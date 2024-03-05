@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.dcfitness.model.User;
 import com.example.dcfitness.model.UserRepository;
+import com.example.dcfitness.model.Video;
 
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
@@ -26,7 +27,7 @@ public class UserController {
 	
 	@Autowired
 	UserRepository userRepo;
-	
+
 	@PutMapping("users/{id}")
 	public ResponseEntity<User> updateUser(@PathVariable("id") long id, @RequestBody User user){
 		Optional<User> userData = userRepo.findById(id);
@@ -61,7 +62,7 @@ public class UserController {
 		} catch (Exception err) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-	
+
 	}
 	
 	@GetMapping("/users")
@@ -86,4 +87,6 @@ public class UserController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+
 }

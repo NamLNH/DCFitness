@@ -34,6 +34,9 @@ public class User {
 	@OneToMany(mappedBy= "user", cascade = CascadeType.ALL)
 	private List<Achievements> achievements = new ArrayList<>();
 	
+	@OneToMany(mappedBy= "user", cascade = CascadeType.ALL)
+	private List<Video> favs = new ArrayList<Video>();
+	
 	//EOC by Yash 26-02-2024
 	
 	public User() {

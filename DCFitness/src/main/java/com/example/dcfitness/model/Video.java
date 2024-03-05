@@ -28,6 +28,10 @@ public class Video {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="UserProfile_id")
+	private User user;
+	
 	@Column(name ="title")
 	private String title;
 	@Column(name ="url")
