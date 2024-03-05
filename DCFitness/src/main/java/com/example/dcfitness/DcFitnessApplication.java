@@ -77,8 +77,8 @@ public class DcFitnessApplication {
 					"3/3/2024",
 					"John"));
 			//videoRepository.save(initNewVideo(categoryRepository,Long.parseLong("1"),video1));
-			System.out.println(video1.getCategory().getName());
-			System.out.println(video1.getAuthor());
+//			System.out.println(video1.getCategory().getName());
+//			System.out.println(video1.getAuthor());
 			try {
 				videoRepository.save(video1);
 				videoRepository.save(video2);
@@ -117,7 +117,7 @@ public class DcFitnessApplication {
 			
 			if(_category.isPresent())
 			{
-				video.setCategory(_category.get());
+//				video.setCategory(_category.get());
 			}
 			else {
 				System.out.println("Cant find the category in list");

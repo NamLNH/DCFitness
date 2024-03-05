@@ -20,6 +20,9 @@ import com.example.dcfitness.model.User;
 import com.example.dcfitness.model.UserRepository;
 import com.example.dcfitness.model.Video;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.ManyToMany;
+
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
 @RequestMapping("/api")
@@ -51,7 +54,7 @@ public class UserController {
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 	
-	
+	 
 	//How to register a new user:
 	@PostMapping("/users")
 	public ResponseEntity<User> createUser(@RequestBody User user){
@@ -86,6 +89,19 @@ public class UserController {
 		} catch (Exception err) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+	
+	@PostMapping("/users/{id}/addFav")
+	public ResponseEntity<User> addFavourite(@PathVariable("id") long id, @RequestBody Video fav) {
+		
+		Optional<User> user = userRepo.findById(id);
+		if(user.isPresent()) {
+			user.get().setFavs(fav);
+			userRepo.save(user.get());
+			return new ResponseEntity<>(user.get(),HttpStatus.ACCEPTED);
+		}
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		
 	}
 	
 

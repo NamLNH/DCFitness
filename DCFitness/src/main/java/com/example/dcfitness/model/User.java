@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -32,13 +33,30 @@ public class User {
 	//BOC by Yash 26-02-2024
 	
 	@OneToMany(mappedBy= "user", cascade = CascadeType.ALL)
-	private List<Achievements> achievements = new ArrayList<>();
+	private List<Achievements> achievements;
 	
 	@OneToMany(mappedBy= "user", cascade = CascadeType.ALL)
-	private List<Video> favs = new ArrayList<Video>();
+	private List<Video> favs;
 	
-	//EOC by Yash 26-02-2024
-	
+
+//	 @ManyToMany(cascade = CascadeType.ALL)
+//	    private List<Video> favoriteVideos = new ArrayList<>();
+	 
+//	public List<Video> getFavoriteVideos() {
+//        return favoriteVideos;
+//    }
+//
+//    public void setFavoriteVideos(List<Video> favoriteVideos) {
+//        this.favoriteVideos = favoriteVideos;
+//    }
+//
+//    public void addFavoriteVideo(Video video) {
+//        favoriteVideos.add(video);
+//    }
+//
+//    public void removeFavoriteVideo(Video video) {
+//        favoriteVideos.remove(video);
+//    }
 	public User() {
 	
 	}
@@ -47,6 +65,8 @@ public class User {
 		this.username = username;
 		this.password = password;
 		this.email = email;
+		this.achievements = new ArrayList<Achievements>();
+		this.favs = new ArrayList<Video>();
 	}
 	
 	
@@ -74,4 +94,14 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public List<Video> getFavs() {
+		return favs;
+	}
+
+	public void setFavs(Video favs) {
+		this.favs.add(favs);
+	}
+	
+	
 }

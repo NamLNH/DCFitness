@@ -43,18 +43,18 @@ public class Video {
 	@Column(name ="author")
 	private String author;
 	
-	//@JsonIgnore
-	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-	@JoinColumn (name ="category_id",nullable = false, referencedColumnName ="id")
-	private Category category;
+//	//@JsonIgnore
+//	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+//	@JoinColumn (name ="category_id", nullable = false, referencedColumnName ="id")
+//	private Category category;
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable (
-		name ="video_bodypart",
-		joinColumns = @JoinColumn(name = "video_id", nullable = false, referencedColumnName = "id"),
-		inverseJoinColumns = @JoinColumn(name = "bodypart_id", nullable = false, referencedColumnName ="id") 
-	)
-	private Set<BodyPart> bodyParts = new HashSet<>();
+//	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//	@JoinTable (
+//		name ="video_bodypart",
+//		joinColumns = @JoinColumn(name = "video_id", nullable = false, referencedColumnName = "id"),
+//		inverseJoinColumns = @JoinColumn(name = "bodypart_id", nullable = false, referencedColumnName ="id") 
+//	)
+//	private Set<BodyPart> bodyParts = new HashSet<>();
 	
 	public Video () {
 		
@@ -65,15 +65,16 @@ public class Video {
 		this.thumbnail = thumbnail;
 		this.uploadDate = uploadDate;
 		this.author = author;
-		this.category = category;
+//		this.category = category;
 	}
+	
 	public Video (String title, String url, String thumbnail, String uploadDate, String author) {
 		this.title = title;
 		this.url = url;
 		this.thumbnail = thumbnail;
 		this.uploadDate = uploadDate;
 		this.author = author;
-		
+//		this.category = new Category("Cardio");
 	}
 	
 	public long getId() {
@@ -109,18 +110,18 @@ public class Video {
 	public void setAuthor(String author) {
 		this.author = author;
 	}
-	public Category getCategory() {
-		return category;
-	}
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-	public Set<BodyPart> getBodyParts() {
-		return bodyParts;
-	}
-	public void assignBodyPart(BodyPart part) {
-		this.bodyParts.add(part);
-	}
+//	public Category getCategory() {
+//		return category;
+//	}
+//	public void setCategory(Category category) {
+//		this.category = category;
+//	}
+//	public Set<BodyPart> getBodyParts() {
+//		return bodyParts;
+//	}
+//	public void assignBodyPart(BodyPart part) {
+//		this.bodyParts.add(part);
+//	}
 	
 	
 }

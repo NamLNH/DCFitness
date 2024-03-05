@@ -30,9 +30,9 @@ public class BodyPart {
 	@Column(name ="name")
 	private String name;	
 	
-	@JsonIgnore
-	@ManyToMany(mappedBy ="bodyParts", fetch = FetchType.LAZY)
-	private Set<Video> videos = new HashSet<>();
+//	@JsonIgnore
+//	@ManyToMany(mappedBy ="bodyParts", fetch = FetchType.LAZY)
+//	private Set<Video> videos = new HashSet<>();
 	
 	public BodyPart () {		
 	}
@@ -49,8 +49,8 @@ public class BodyPart {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Set<Video> getVideos() {
-		return videos;
-	}
+//	public Set<Video> getVideos() {
+//		return videos;
+//	}
 	
 }
