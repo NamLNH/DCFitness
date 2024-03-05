@@ -1,5 +1,10 @@
 package com.example.dcfitness.model;
 
+import java.time.Instant;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,18 +25,26 @@ public class Comment {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
+	@CreationTimestamp
+	@Column(name="createdOn")
+    private Instant createdOn;
+	
+    @UpdateTimestamp
+	@Column(name="lastUpdatedOn")
+    private Instant lastUpdatedOn;
+	
+	@Column(name="content")
+	private String content;
+
 	//@JsonIgnore
-	@OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinColumn (name ="video_id",nullable = false, referencedColumnName ="id")
 	private Video video;
 	
 	//@JsonIgnore
-	@OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinColumn (name ="user_id",nullable = false, referencedColumnName ="id")
 	private User user;
-	
-	@Column(name="content")
-	private String content;
 	
 	public Comment () {}
 	
@@ -53,6 +66,22 @@ public class Comment {
 
 	public String getContent() {
 		return content;
+	}
+	
+	public Instant getCreatedOn() {
+		return createdOn;
+	}
+	
+	public Instant getlastUpdatedOn() {
+		return lastUpdatedOn;
+	}
+
+	public void setCreatedOn(Instant createdOn) {
+		this.createdOn = createdOn;
+	}
+	
+	public void setlastUpdatedOn(Instant lastUpdatedOn) {
+		this.lastUpdatedOn = lastUpdatedOn;
 	}
 
 	public void setId(long id) {

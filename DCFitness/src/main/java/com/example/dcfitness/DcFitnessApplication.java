@@ -96,7 +96,7 @@ public class DcFitnessApplication {
 					new Comment("Yes, motivated!!!"));
 			Comment comment4 = initComments(videoRepository, userRepo, Long.parseLong("2"), Long.parseLong("3"),
 					new Comment("Will you do more of the upper body workout videos?"));
-			Comment comment5 = initComments(videoRepository, userRepo, Long.parseLong("3"), Long.parseLong("4"),
+			Comment comment5 = initComments(videoRepository, userRepo, Long.parseLong("2"), Long.parseLong("4"),
 					new Comment("...???"));
 			
 			try {
