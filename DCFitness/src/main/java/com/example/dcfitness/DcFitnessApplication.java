@@ -18,6 +18,8 @@ import com.example.dcfitness.model.Video;
 import com.example.dcfitness.model.VideoRepository;
 import com.example.dcfitness.model.Category;
 import com.example.dcfitness.model.CategoryRepository;
+import com.example.dcfitness.model.CommentRepository;
+import com.example.dcfitness.model.Comment;
 
 @SpringBootApplication
 public class DcFitnessApplication {
@@ -31,7 +33,8 @@ public class DcFitnessApplication {
 			AchievementRepository achRepo,
 			VideoRepository videoRepository,
 			CategoryRepository categoryRepository,
-			BodyPartRepository bodyPartRepository) {
+			BodyPartRepository bodyPartRepository,
+			CommentRepository commentRepo) {
 		return args -> {
 			
 			User yash = new User("YashManiar","BCOne","yashmr@student.douglascollege.ca");
@@ -83,6 +86,29 @@ public class DcFitnessApplication {
 				System.out.println("error in saving to database");
 				System.out.println(e.getMessage());
 			}
+			
+			// new comments
+			Comment comment1 = initComments(videoRepository, userRepo, Long.parseLong("1"), Long.parseLong("1"),
+					new Comment("This is the best workout video!!!"));
+			Comment comment2 = initComments(videoRepository, userRepo, Long.parseLong("1"), Long.parseLong("2"),
+					new Comment("Thank you for your content"));
+			Comment comment3 = initComments(videoRepository, userRepo, Long.parseLong("1"), Long.parseLong("1"),
+					new Comment("Yes, motivated!!!"));
+			Comment comment4 = initComments(videoRepository, userRepo, Long.parseLong("2"), Long.parseLong("3"),
+					new Comment("Will you do more of the upper body workout videos?"));
+			Comment comment5 = initComments(videoRepository, userRepo, Long.parseLong("2"), Long.parseLong("4"),
+					new Comment("...???"));
+			
+			try {
+				commentRepo.save(comment1);
+				commentRepo.save(comment2);
+				commentRepo.save(comment3);
+				commentRepo.save(comment4);
+				commentRepo.save(comment5);
+			} catch (Exception e) {
+				System.out.println("error in saving comment to database");
+				System.out.println(e.getMessage());
+			}
 		};
 	}
 	public static Video initNewVideo(CategoryRepository categoryRepo, Long categoryId, Video video) {
@@ -101,5 +127,31 @@ public class DcFitnessApplication {
 		}
 			
 		return video;
+	}
+	
+	public static Comment initComments(VideoRepository videoRepository, UserRepository userRepository, Long videoId, Long userId, Comment comment) {
+		try {
+			Optional<Video> _video = videoRepository.findById(videoId);
+			Optional<User> _user = userRepository.findById(userId);
+			
+			
+			if(_video.isPresent())
+			{
+				comment.setVideo(_video.get());
+			} else {
+				System.out.println("Cant find the video in list");
+			}
+			
+			if(_user.isPresent())
+			{
+				comment.setUser(_user.get());
+			} else {
+				System.out.println("Cant find the user in list");
+			}
+		} catch (Exception e) {
+			System.out.println("Error in getting video and user from database");
+		}
+			
+		return comment;
 	}
 }
