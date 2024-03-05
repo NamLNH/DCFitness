@@ -18,6 +18,8 @@ import com.example.dcfitness.model.Video;
 import com.example.dcfitness.model.VideoRepository;
 import com.example.dcfitness.model.Category;
 import com.example.dcfitness.model.CategoryRepository;
+import com.example.dcfitness.model.Challenge;
+import com.example.dcfitness.model.ChallengeRepository;
 import com.example.dcfitness.model.CommentRepository;
 import com.example.dcfitness.model.Comment;
 
@@ -34,7 +36,8 @@ public class DcFitnessApplication {
 			VideoRepository videoRepository,
 			CategoryRepository categoryRepository,
 			BodyPartRepository bodyPartRepository,
-			CommentRepository commentRepo) {
+			CommentRepository commentRepo,
+			ChallengeRepository challengeRepo) {
 		return args -> {
 			
 			User yash = new User("YashManiar","BCOne","yashmr@student.douglascollege.ca");
@@ -87,7 +90,7 @@ public class DcFitnessApplication {
 				System.out.println(e.getMessage());
 			}
 			
-			// new comments
+			// new comments - Aung
 			Comment comment1 = initComments(videoRepository, userRepo, Long.parseLong("1"), Long.parseLong("1"),
 					new Comment("This is the best workout video!!!"));
 			Comment comment2 = initComments(videoRepository, userRepo, Long.parseLong("1"), Long.parseLong("2"),
@@ -107,6 +110,29 @@ public class DcFitnessApplication {
 				commentRepo.save(comment5);
 			} catch (Exception e) {
 				System.out.println("error in saving comment to database");
+				System.out.println(e.getMessage());
+			}
+			
+			// new challenges and users assigned to it - Aung
+			Challenge challenge1 = new Challenge("2024 Challenge", "New Year, New Goals!!! Join this challenge to unlock your potential!!!");
+			Challenge challenge2 = new Challenge("Mr Beast!", "There will be ifferent games for different levels across the continent! Last day to submit your application is End of April.");
+			Challenge challenge3 = new Challenge("Begineers", "Welcome all!");
+			
+			try {
+				challengeRepo.save(challenge1);
+				challengeRepo.save(challenge2);
+				challengeRepo.save(challenge3);
+				
+				initUsersInChallenges(userRepo, Long.parseLong("1"), challenge1 ); // adding user 1 to challenge 1
+				initUsersInChallenges(userRepo, Long.parseLong("1"), challenge2 );
+				initUsersInChallenges(userRepo, Long.parseLong("1"), challenge3 );
+				initUsersInChallenges(userRepo, Long.parseLong("2"), challenge1 );
+				initUsersInChallenges(userRepo, Long.parseLong("2"), challenge2 );
+				initUsersInChallenges(userRepo, Long.parseLong("3"), challenge3 );
+				
+				
+			} catch (Exception e) {
+				System.out.println("error in saving challenges to database");
 				System.out.println(e.getMessage());
 			}
 		};
@@ -153,5 +179,22 @@ public class DcFitnessApplication {
 		}
 			
 		return comment;
+	}
+	
+	public static Challenge initUsersInChallenges(UserRepository userRepository, Long userId, Challenge challenge) {
+		try {
+			Optional<User> _user = userRepository.findById(userId);
+			
+			if(_user.isPresent())
+			{
+				challenge.assignUser(_user.get());
+			} else {
+				System.out.println("Cant find the user in list");
+			}
+		} catch (Exception e) {
+			System.out.println("Error in getting video and user from database");
+		}
+			
+		return challenge;
 	}
 }
