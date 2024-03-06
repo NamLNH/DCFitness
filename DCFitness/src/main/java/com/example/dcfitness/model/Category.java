@@ -26,9 +26,9 @@ public class Category {
 	@Column(name ="name")
 	private String name;	
 	
-	@JsonIgnore
-	@OneToMany (mappedBy ="category", fetch = FetchType.LAZY)
-	private Set<Video> videos = new HashSet<>();
+//	@JsonIgnore
+//	@OneToMany (mappedBy ="category", fetch = FetchType.LAZY)
+//	private Set<Video> videos = new HashSet<>();
 	
 	public Category () {		
 	}
@@ -45,12 +45,12 @@ public class Category {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Set<Video> getVideos() {
-		return videos;
-	}
-	public void setVideos(Set<Video> videos) {
-		this.videos = videos;
-	}
+//	public Set<Video> getVideos() {
+//		return videos;
+//	}
+//	public void setVideos(Set<Video> videos) {
+//		this.videos = videos;
+//	}
 	
 	
 }

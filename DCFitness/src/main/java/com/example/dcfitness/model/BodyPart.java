@@ -49,8 +49,8 @@ public class BodyPart {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Set<Video> getVideos() {
-		return videos;
-	}
+//	public Set<Video> getVideos() {
+//		return videos;
+//	}
 	
 }

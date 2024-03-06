@@ -1,6 +1,7 @@
 package com.example.dcfitness.model;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -16,7 +17,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -43,16 +43,28 @@ public class Video {
 	@Column(name ="author")
 	private String author;
 	
-	//@JsonIgnore
+//	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-	@JoinColumn (name ="category_id",nullable = false, referencedColumnName ="id")
+	@JoinColumn (name ="category_id", referencedColumnName ="id")
 	private Category category;
+
+//	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+//	@JoinTable(
+//			name = "User_Video",
+//			joinColumns = { @JoinColumn(name = "video_id", referencedColumnName = "id" ) },
+//			inverseJoinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") }
+//	)
+//	private Set<User> users = new HashSet<>();
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JsonIgnore
+	@ManyToMany(mappedBy ="favoriteVideos", fetch = FetchType.LAZY)
+	private Set<User> users = new HashSet<>();
+	
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
 	@JoinTable (
 		name ="video_bodypart",
-		joinColumns = @JoinColumn(name = "video_id", nullable = false, referencedColumnName = "id"),
-		inverseJoinColumns = @JoinColumn(name = "bodypart_id", nullable = false, referencedColumnName ="id") 
+		joinColumns = @JoinColumn(name = "video_id", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name = "bodypart_id", referencedColumnName ="id") 
 	)
 	private Set<BodyPart> bodyParts = new HashSet<>();
 	
@@ -67,13 +79,13 @@ public class Video {
 		this.author = author;
 		this.category = category;
 	}
+	
 	public Video (String title, String url, String thumbnail, String uploadDate, String author) {
 		this.title = title;
 		this.url = url;
 		this.thumbnail = thumbnail;
 		this.uploadDate = uploadDate;
 		this.author = author;
-		
 	}
 	
 	public long getId() {
@@ -118,9 +130,17 @@ public class Video {
 	public Set<BodyPart> getBodyParts() {
 		return bodyParts;
 	}
+	
 	public void assignBodyPart(BodyPart part) {
 		this.bodyParts.add(part);
 	}
 	
+	public Set<User> getUsers() {
+        return this.users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = new HashSet<User>(users);
+    }
 	
 }
