@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,6 +37,16 @@ public class UserController {
 	@Autowired
 	private VideoRepository vidRepo;
 
+	@DeleteMapping("/users/{id}")
+	public ResponseEntity<User> deleteUserById(@PathVariable("id") long id){
+		try {
+			userRepo.deleteById(id);
+		} catch (Exception err) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		} 
+		return new ResponseEntity<>(HttpStatus.OK);
+	}	
+	
 	@PutMapping("users/{id}")
 	public ResponseEntity<User> updateUser(@PathVariable("id") long id, @RequestBody User user){
 		Optional<User> userData = userRepo.findById(id);
@@ -61,7 +72,7 @@ public class UserController {
 	
 	 
 	//How to register a new user:
-	@PostMapping("/users")
+	@PostMapping("/users/signup")
 	public ResponseEntity<User> createUser(@RequestBody User user){
 		try {
 			User newUser = new User(user.getUsername(),user.getPassword(),user.getEmail());
@@ -82,7 +93,7 @@ public class UserController {
 			if(username == null) {
 				userRepo.findAll().forEach(users::add);
 			} else {
-				userRepo.findByUsername(username).forEach(users::add);
+				userRepo.findByUsername(username).ifPresent(users::add);
 			}
 			
 			if(users.isEmpty()) {
