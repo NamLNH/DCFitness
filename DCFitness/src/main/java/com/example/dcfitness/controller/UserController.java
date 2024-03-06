@@ -16,20 +16,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.dcfitness.model.BodyPart;
 import com.example.dcfitness.model.User;
 import com.example.dcfitness.model.UserRepository;
 import com.example.dcfitness.model.Video;
+import com.example.dcfitness.model.VideoRepository;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.ManyToMany;
 
-@CrossOrigin(origins = "http://localhost:8081")
+//@CrossOrigin(origins = "http://localhost:8081")
 @RestController
 @RequestMapping("/api")
 public class UserController {
 	
 	@Autowired
-	UserRepository userRepo;
+	private UserRepository userRepo;
+	
+	@Autowired
+	private VideoRepository vidRepo;
 
 	@PutMapping("users/{id}")
 	public ResponseEntity<User> updateUser(@PathVariable("id") long id, @RequestBody User user){
@@ -91,18 +96,51 @@ public class UserController {
 		}
 	}
 	
-	@PostMapping("/users/{id}/addFav")
-	public ResponseEntity<User> addFavourite(@PathVariable("id") long id, @RequestBody Video fav) {
-		
-		Optional<User> user = userRepo.findById(id);
-		if(user.isPresent()) {
-			user.get().setFavs(fav);
-			userRepo.save(user.get());
-			return new ResponseEntity<>(user.get(),HttpStatus.ACCEPTED);
+//	//Adds Video as Favorite to User as per ID of user and video both
+//	@PutMapping("users/{userId}/addFav/{videoId}")
+//	public ResponseEntity<User> addFavourite(
+//			@PathVariable("userId") long userId,
+//			@PathVariable("videoId") long videoId
+//	) {
+//
+//		Optional<User> user = userRepo.findById(userId);
+//		if(user.isPresent()) {
+//			Optional<Video> video = vidRepo.findById(videoId);
+//			if (video.isPresent()) {
+//				user.get().addFavoriteVideo(video.get());
+//				userRepo.save(user.get());
+//				return new ResponseEntity<>(user.get(),HttpStatus.ACCEPTED);
+//			}
+//			//Video ID is invalid
+//			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//		}
+//		//User ID is invalid
+//		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//		
+//	}
+	
+	//API Assign body part to video
+		@PutMapping("/users/{userId}/addFav/{videoId}")
+		public ResponseEntity<User> addFavourite(
+				@PathVariable("userId") long userId,
+				@PathVariable("videoId") long videoId)
+		{
+			try {
+				Optional<User> _user = userRepo.findById(userId);
+				Optional<Video> _video = vidRepo.findById(videoId);
+				if(_video.isPresent() && _user.isPresent()) {
+					Video video = _video.get();
+					User user = _user.get();
+					user.assignFavVideo(video);
+					return new ResponseEntity<>(userRepo.save(user),HttpStatus.OK);
+				}
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+				
+			} catch (Exception e) {
+				System.out.println("Error in query user and video");
+				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
 		}
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		
-	}
 	
 
 }

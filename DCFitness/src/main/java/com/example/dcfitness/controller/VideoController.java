@@ -31,6 +31,9 @@ public class VideoController {
 	@Autowired
 	VideoRepository videoRepository;
 	
+	@Autowired
+	BodyPartRepository bodypartRepository;
+	
 	//GET API for all videos
 	@GetMapping("/videos")
 	public ResponseEntity<List<Video>> getAllVideos() {
@@ -59,44 +62,44 @@ public class VideoController {
 	
 	
 	//API Get all video with category filter
-//	@GetMapping("/videos/category/{categoryId}")
-//	public ResponseEntity<List<Video>> getVideosByCategory(@PathVariable("categoryId") Long categoryId){
-//		ArrayList<Video> videos = new ArrayList<Video>();
-//		try {
-//			videoRepository.findByCategoryId(categoryId).forEach(videos::add);
-//			if(videos.isEmpty()) {
-//				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//			}
-//			return new ResponseEntity<>(videos, HttpStatus.OK);
-//		} catch (Exception e) {
-//			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-//		}	
-//		
-//	}	
+	@GetMapping("/videos/category/{categoryId}")
+	public ResponseEntity<List<Video>> getVideosByCategory(@PathVariable("categoryId") Long categoryId){
+		ArrayList<Video> videos = new ArrayList<Video>();
+		try {
+			videoRepository.findByCategoryId(categoryId).forEach(videos::add);
+			if(videos.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+			return new ResponseEntity<>(videos, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}	
+		
+	}	
 	
 	
-//	//API Assign body part to video
-//	@PutMapping("/videos/{videoId}/bodyparts/{bodyPartId}")
-//	public ResponseEntity<Video> assignBodyPart(
-//			@PathVariable("videoId") Long videoId,
-//			@PathVariable("bodyPartId") Long bodyPartId) {
-//		
-//		try {
-//			Optional<Video> _video = videoRepository.findById(videoId);
-//			Optional<BodyPart> _part = bodyPartRepository.findById(bodyPartId);
-//			if(_video.isPresent() && _part.isPresent()) {
-//				Video video = _video.get();
-//				BodyPart part = _part.get();
-////				video.assignBodyPart(part);
-//				return new ResponseEntity<>(videoRepository.save(video),HttpStatus.OK);
-//			}
-//			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//			
-//		} catch (Exception e) {
-//			System.out.println("Error in query video and body part");
-//			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//		}
-//	}
+	//API Assign body part to video
+	@PutMapping("/videos/{videoId}/bodyparts/{bodyPartId}")
+	public ResponseEntity<Video> assignBodyPart(
+			@PathVariable("videoId") Long videoId,
+			@PathVariable("bodyPartId") Long bodyPartId) {
+		
+		try {
+			Optional<Video> _video = videoRepository.findById(videoId);
+			Optional<BodyPart> _part = bodypartRepository.findById(bodyPartId);
+			if(_video.isPresent() && _part.isPresent()) {
+				Video video = _video.get();
+				BodyPart part = _part.get();
+				video.assignBodyPart(part);
+				return new ResponseEntity<>(videoRepository.save(video),HttpStatus.OK);
+			}
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			
+		} catch (Exception e) {
+			System.out.println("Error in query video and body part");
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 	
 
 }

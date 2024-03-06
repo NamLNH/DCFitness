@@ -1,14 +1,19 @@
 package com.example.dcfitness.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -35,38 +40,34 @@ public class User {
 	@OneToMany(mappedBy= "user", cascade = CascadeType.ALL)
 	private List<Achievements> achievements;
 	
-	@OneToMany(mappedBy= "user", cascade = CascadeType.ALL)
-	private List<Video> favs;
-	
 
-//	 @ManyToMany(cascade = CascadeType.ALL)
-//	    private List<Video> favoriteVideos = new ArrayList<>();
-	 
-//	public List<Video> getFavoriteVideos() {
-//        return favoriteVideos;
-//    }
-//
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
+	@JoinTable(
+		name = "User_Video",
+		joinColumns = { @JoinColumn(name = "user_id") },
+		inverseJoinColumns = { @JoinColumn(name = "video_id") }
+	)
+	private Set<Video> favoriteVideos;
+
 //    public void setFavoriteVideos(List<Video> favoriteVideos) {
-//        this.favoriteVideos = favoriteVideos;
+//        this.favoriteVideos = new HashSet<Video>(favoriteVideos);
 //    }
 //
 //    public void addFavoriteVideo(Video video) {
-//        favoriteVideos.add(video);
+//    	this.favoriteVideos = new HashSet<Video>();
+//        this.favoriteVideos.add(video);
 //    }
 //
 //    public void removeFavoriteVideo(Video video) {
-//        favoriteVideos.remove(video);
+//        this.favoriteVideos.remove(video);
 //    }
-	public User() {
-	
-	}
+	public User() {}
 	
 	public User(String username, String password, String email) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
 		this.achievements = new ArrayList<Achievements>();
-		this.favs = new ArrayList<Video>();
 	}
 	
 	
@@ -94,14 +95,13 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public List<Video> getFavs() {
-		return favs;
-	}
-
-	public void setFavs(Video favs) {
-		this.favs.add(favs);
+	
+	public void assignFavVideo(Video video) {
+		this.favoriteVideos.add(video);
 	}
 	
+	public Set<Video> getFavoriteVideos() {
+        return this.favoriteVideos;
+    }
 	
 }
