@@ -130,7 +130,7 @@ public class UserController {
 //		
 //	}
 	
-	//API Assign body part to video
+	//Adds Video as Favorite to User as per ID of user and video both
 		@PutMapping("/users/{userId}/addFav/{videoId}")
 		public ResponseEntity<User> addFavourite(
 				@PathVariable("userId") long userId,

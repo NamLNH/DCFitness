@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,6 +35,9 @@ public class VideoController {
 	
 	@Autowired
 	BodyPartRepository bodypartRepository;
+	
+	@Autowired
+	CategoryRepository categoryRepository;
 	
 	//GET API for all videos
 	@GetMapping("/videos")
@@ -77,6 +82,26 @@ public class VideoController {
 		
 	}	
 	
+	// Delete video by id
+			@DeleteMapping("/videos/{id}")
+			public ResponseEntity<List<Video>> deleteVideoById(@PathVariable("id") Long id) {
+				try {
+					ArrayList<Video> videos = new ArrayList<>();
+					videoRepository.deleteById(id);
+					videoRepository.findAll().forEach(videos::add);
+					if(videos.isEmpty())
+					{
+						return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+					}
+					else {
+						return new ResponseEntity<>(videos, HttpStatus.OK);
+					}
+				} catch (Exception e) {
+					return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+			}
+	
+	
 	
 	//API Assign body part to video
 	@PutMapping("/videos/{videoId}/bodyparts/{bodyPartId}")
@@ -99,6 +124,24 @@ public class VideoController {
 			System.out.println("Error in query video and body part");
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+	
+	public static Video initNewVideo(CategoryRepository categoryRepo, Long categoryId, Video video) {
+		try {
+			Optional<Category> _category = categoryRepo.findById(categoryId);
+			
+			if(_category.isPresent())
+			{
+				video.setCategory(_category.get());
+			}
+			else {
+				System.out.println("Cant find the category in list");
+			}
+		} catch (Exception e) {
+			System.out.println("Error in getting category from database");
+		}
+			
+		return video;
 	}
 	
 

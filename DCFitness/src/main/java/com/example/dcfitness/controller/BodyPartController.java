@@ -7,9 +7,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -66,6 +68,45 @@ public class BodyPartController {
 		}
 
 	}
+	
+	// Delete bodypart by id
+	@DeleteMapping("/bodyparts/{id}")
+	public ResponseEntity<List<BodyPart>> deleteBodyPartById(@PathVariable("id") Long id) {
+		try {
+			ArrayList<BodyPart> bodyParts = new ArrayList<>();
+			bodyPartRepository.deleteById(id);
+			bodyPartRepository.findAll().forEach(bodyParts::add);
+			if(bodyParts.isEmpty())
+			{
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+			else {
+				return new ResponseEntity<>(bodyParts, HttpStatus.OK);
+			}
+			} catch (Exception e) {
+					return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+			}
+			
+	// Edit body part by id
+	@PutMapping("/bodyparts/{id}")
+	public ResponseEntity<BodyPart> updateBodyPart(@PathVariable("id") long id, @RequestBody BodyPart newBodyPart) {
+		try {
+			Optional<BodyPart> bodyPart = bodyPartRepository.findById(id);
+				
+			if(bodyPart.isPresent()) {
+				BodyPart _bodyPart = bodyPart.get();
+				_bodyPart.setName(newBodyPart.getName());
+				bodyPartRepository.save(_bodyPart);
+				return new ResponseEntity<>(_bodyPart, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+			} catch (Exception e) {
+				return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+		
 	
 
 }

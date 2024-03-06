@@ -115,7 +115,7 @@ public class DcFitnessApplication {
 			
 			// new challenges and users assigned to it - Aung
 			Challenge challenge1 = new Challenge("2024 Challenge", "New Year, New Goals!!! Join this challenge to unlock your potential!!!");
-			Challenge challenge2 = new Challenge("Mr Beast!", "There will be ifferent games for different levels across the continent! Last day to submit your application is End of April.");
+			Challenge challenge2 = new Challenge("Mr Beast!", "There will be different games for different levels across the continent! Last day to submit your application is End of April.");
 			Challenge challenge3 = new Challenge("Begineers", "Welcome all!");
 			
 			try {
@@ -143,7 +143,7 @@ public class DcFitnessApplication {
 			
 			if(_category.isPresent())
 			{
-//				video.setCategory(_category.get());
+				video.setCategory(_category.get());
 			}
 			else {
 				System.out.println("Cant find the category in list");
