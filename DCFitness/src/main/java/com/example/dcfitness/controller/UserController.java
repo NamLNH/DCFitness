@@ -26,7 +26,7 @@ import com.example.dcfitness.model.VideoRepository;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.ManyToMany;
 
-//@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "http://localhost:8081")
 @RestController
 @RequestMapping("/api")
 public class UserController {
