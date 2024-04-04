@@ -1,6 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router";
 import UserLogin from "../components/UserLogin.vue";
 import UserProfile from "../components/UserProfile.vue";
+import VideoView from "../components/VideoView.vue";
 
 const routes = [
     {
@@ -14,6 +15,12 @@ const routes = [
         path:"/profile",
         name:"userProfile",
         component:UserProfile,
+        meta: { title: 'DC Fitness' }
+    },
+    {
+        path: "/video",
+        name: "videoView",
+        component: VideoView,
         meta: { title: 'DC Fitness' }
     }
 ]
