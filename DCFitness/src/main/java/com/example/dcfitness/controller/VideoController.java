@@ -56,14 +56,38 @@ public class VideoController {
 		}
 
 	}	
+	//get  video by id
+	@GetMapping("/videos/{id}")
+	public ResponseEntity<Video> getVideoById(@PathVariable("id") long id){
+		Optional<Video> video = videoRepository.findById(id);
+		if(video.isPresent()) {
+			return new ResponseEntity<>(video.get(),HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
 	
-//	@GetMapping("/videos/{id}/addFav")
-//	public ResponseEntity<User> addFavouriteVideo() {
-//		try {
-//		} catch (Exception e) {
-//			return new ResponseEntity<>()
-//		}
-//	}
+	//edit video
+	
+	@PutMapping("/videos/{id}")
+	public ResponseEntity<Video> updateVideo(@PathVariable("id") long id, @RequestBody Video newVideo) {
+		try {
+			Optional<Video> video = videoRepository.findById(id);
+			
+			if(video.isPresent()) {
+				Video _video = video.get();
+				_video.setTitle(newVideo.getTitle());
+				_video.setAuthor(newVideo.getAuthor());
+				_video.setCategory(newVideo.getCategory());
+				_video.setUrl(newVideo.getUrl());
+				videoRepository.save(_video);
+				return new ResponseEntity<>(_video, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 	
 	
 	//API Get all video with category filter

@@ -70,13 +70,11 @@ public class DcFitnessApplication {
 			Video video1 = initNewVideo(categoryRepository,Long.parseLong("1"),
 					new Video("20 MIN FULL BODY WORKOUT FOR BEGINNERS",
 					"https://youtu.be/iCQ2gC4DqJw",
-					"",
 					"3/3/2024",
 					"Nam"));
 			Video video2 = initNewVideo(categoryRepository,Long.parseLong("2"),
 					new Video("10 MINUTE MORNING WORKOUT",
 					"https://youtu.be/3sEeVJEXTfY?list=PLjngT6yRRZHPsjj-CIduSL9FpclppM9qm",
-					"",
 					"3/3/2024",
 					"John"));
 			//videoRepository.save(initNewVideo(categoryRepository,Long.parseLong("1"),video1));

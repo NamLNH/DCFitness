@@ -71,19 +71,19 @@ public class Video {
 	public Video () {
 		
 	}
-	public Video (String title, String url, String thumbnail, String uploadDate, String author, Category category) {
+	public Video (String title, String url, String uploadDate, String author, Category category) {
 		this.title = title;
 		this.url = url;
-		this.thumbnail = thumbnail;
+		this.thumbnail ="https://i.ytimg.com/vi/"+url.substring(17, 28)+"/default.jpg";
 		this.uploadDate = uploadDate;
 		this.author = author;
 		this.category = category;
 	}
 	
-	public Video (String title, String url, String thumbnail, String uploadDate, String author) {
+	public Video (String title, String url, String uploadDate, String author) {
 		this.title = title;
 		this.url = url;
-		this.thumbnail = thumbnail;
+		this.thumbnail = "https://i.ytimg.com/vi/"+url.substring(17, 28)+"/default.jpg";
 		this.uploadDate = uploadDate;
 		this.author = author;
 	}
