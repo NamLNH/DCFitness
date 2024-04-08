@@ -8,15 +8,14 @@
           <ul v-else>
             <li v-for="(video, index) in videos" :key="index">
               <div>
-                <img :src="video.thumbnail" alt="User Icon" />
+                <img :src="video.thumbnail" alt="Thumbnail" />
               </div>
               <div class="">
                 <div class="">{{ video.title }}</div>
-                <div class="">{{ video.category }}</div>
+                <div class="">{{ video.category.name }}</div>                
               </div>
             </li>
           </ul>
-          <div>{{ this.error }}</div>
         </div>
       </section>
       <section class="side">
