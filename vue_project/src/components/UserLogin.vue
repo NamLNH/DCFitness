@@ -13,6 +13,7 @@
       </form>
       <button type="submit" @click="login">Login</button>
       <p>{{ message }}</p>
+      <router-link to="/signup" ><button>SIGN-UP</button></router-link>
   </div>
 </template>
 <script>

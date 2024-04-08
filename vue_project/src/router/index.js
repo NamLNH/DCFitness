@@ -3,6 +3,7 @@ import UserLogin from "../components/UserLogin.vue";
 import UserProfile from "../components/UserProfile.vue";
 import VideoView from "../components/VideoView.vue";
 import HomePage from "@/components/HomePage.vue";
+import SignUp from "@/components/SignUp.vue";
 
 const routes = [
     {
@@ -28,6 +29,12 @@ const routes = [
         path: "/home",
         name: "homePage",
         component: HomePage,
+        meta: { titile: 'DC Fitness'}
+    },
+    {
+        path: "/signup",
+        name: "signUpPage",
+        component: SignUp,
         meta: { titile: 'DC Fitness'}
     }
 ]
