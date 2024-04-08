@@ -77,6 +77,9 @@ public class DcFitnessApplication {
 					"https://youtu.be/3sEeVJEXTfY?list=PLjngT6yRRZHPsjj-CIduSL9FpclppM9qm",
 					"3/3/2024",
 					"John"));
+			//https://youtu.be/iCQ2gC4DqJw
+			//https://youtu.be/3sEeVJEXTfY?list=PLjngT6yRRZHPsjj-CIduSL9FpclppM9qm
+			
 			//videoRepository.save(initNewVideo(categoryRepository,Long.parseLong("1"),video1));
 //			System.out.println(video1.getCategory().getName());
 //			System.out.println(video1.getAuthor());

@@ -26,6 +26,7 @@ import com.example.dcfitness.model.User;
 import com.example.dcfitness.model.Video;
 import com.example.dcfitness.model.VideoRepository;
 
+@CrossOrigin(origins = "http://localhost:8081")
 @RestController
 @RequestMapping("/api")
 public class VideoController {
@@ -49,6 +50,8 @@ public class VideoController {
 			if (videos.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
+			System.out.println("got videos list");
+			System.out.println(videos);
 			return new ResponseEntity<>(videos, HttpStatus.OK);
 
 		} catch (Exception e) {

@@ -42,6 +42,8 @@ public class Video {
 	private String uploadDate;
 	@Column(name ="author")
 	private String author;
+	@Column(name ="video_id")
+	private String videoId;
 	
 //	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
@@ -75,17 +77,21 @@ public class Video {
 		this.title = title;
 		this.url = url;
 		this.thumbnail ="https://i.ytimg.com/vi/"+url.substring(17, 28)+"/default.jpg";
+		//this.thumbnail = "https://i.ytimg.com/vi/"+url+"/default.jpg";
 		this.uploadDate = uploadDate;
 		this.author = author;
 		this.category = category;
+		this.videoId = url.substring(17, 28);
 	}
 	
 	public Video (String title, String url, String uploadDate, String author) {
 		this.title = title;
 		this.url = url;
 		this.thumbnail = "https://i.ytimg.com/vi/"+url.substring(17, 28)+"/default.jpg";
+		//this.thumbnail = this.thumbnail = "https://i.ytimg.com/vi/"+url+"/default.jpg";
 		this.uploadDate = uploadDate;
 		this.author = author;
+		this.videoId = url.substring(17, 28);
 	}
 	
 	public long getId() {
@@ -142,5 +148,12 @@ public class Video {
     public void setUsers(List<User> users) {
         this.users = new HashSet<User>(users);
     }
+	public String getVideoId() {
+		return videoId;
+	}
+	public void setVideoId(String videoId) {
+		this.videoId = videoId;
+	}
+    
 	
 }
