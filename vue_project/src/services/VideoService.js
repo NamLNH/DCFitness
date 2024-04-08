@@ -1,8 +1,8 @@
 import http from "../http-common.js";
 
 class VideoService {
-    getAllVideos() {
-        return http.get(`/videos`);
+    getVideos() {
+        return http.get("/videos");
     }
 }
 
