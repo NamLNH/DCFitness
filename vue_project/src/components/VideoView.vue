@@ -1,4 +1,5 @@
 <template>
+    <WebHeader/>
     <div>
       <h1>Video View Component</h1>
       <div>
@@ -14,6 +15,7 @@
   import VideoService from '@/services/VideoService';
   import CommentsView from "./CommentsView.vue";
   import VideoPlayer from "./VideoPlayer.vue";
+import WebHeader from './WebHeader.vue';
   
   
   export default {
@@ -25,6 +27,7 @@
     components: {
       CommentsView,
       VideoPlayer,
+      WebHeader
     },
     mounted(){
       this.getVideoUrl();

@@ -1,4 +1,5 @@
 <template>
+  <WebHeader/>
   <div>
     <article>
       <section class="main">
@@ -21,8 +22,13 @@
                 <td class="table-cover">
                   <span><img :src="video.thumbnail" alt="Thumbnail" /></span>
                 </td>
-                <td class="author" @click="toVideo(video.id)">
+                <td v-if="currentUser" class="author" @click="toVideo(video.id)">
                   <a :href="'/video'"
+                    ><strong> {{ video.title }}</strong></a
+                  >
+                </td>
+                <td v-else class="author" >
+                  <a
                     ><strong> {{ video.title }}</strong></a
                   >
                 </td>
@@ -57,6 +63,7 @@
 <script>
 import VideoService from "@/services/VideoService";
 import UserDataService from "@/services/UserDataService";
+import WebHeader from "./WebHeader.vue";
 
 export default {
   data() {
@@ -116,6 +123,9 @@ export default {
 
     }
   },
+  components:{
+    WebHeader
+  }
 };
 </script>
   

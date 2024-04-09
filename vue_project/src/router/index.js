@@ -8,8 +8,7 @@ import ModifyVideo from "@/components/ModifyVideo.vue";
 
 const routes = [
     {
-        path: "/",
-        alias:"/login",
+        path:"/login",
         name:"login",
         component: UserLogin,
         meta: { title: 'DC Fitness' }
@@ -27,7 +26,8 @@ const routes = [
         meta: { title: 'DC Fitness' }
     },
     {
-        path: "/home",
+        path: "/",
+        alias: "/home",
         name: "homePage",
         component: HomePage,
         meta: { titile: 'DC Fitness'}
