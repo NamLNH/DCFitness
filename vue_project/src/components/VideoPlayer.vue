@@ -22,9 +22,10 @@
     computed: {
       embedUrl() {
         // Extract video ID from the YouTube link
-        const videoId = this.extractVideoId(this.youtubeLink);
+        // Nam commented it
+        //const videoId = this.extractVideoId(this.youtubeLink);
         // Construct the embed URL for the YouTube video
-        return `https://www.youtube.com/embed/${videoId}`;
+        return `https://www.youtube.com/embed/${this.youtubeLink}`;
       },
     },
     methods: {
