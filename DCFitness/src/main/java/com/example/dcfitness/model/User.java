@@ -35,13 +35,16 @@ public class User {
 	@Column(name="email")
 	private String email;
 	
+	@Column(name="role")
+	private String role;
+	
 	//BOC by Yash 26-02-2024
 	
 	@OneToMany(mappedBy= "user", cascade = CascadeType.ALL)
 	private List<Achievements> achievements;
 	
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
 	@JoinTable(
 		name = "User_Video",
 		joinColumns = { @JoinColumn(name = "user_id") },
@@ -67,6 +70,7 @@ public class User {
 		this.username = username;
 		this.password = password;
 		this.email = email;
+		this.role = "user";
 		this.achievements = new ArrayList<Achievements>();
 	}
 	
@@ -103,5 +107,14 @@ public class User {
 	public Set<Video> getFavoriteVideos() {
         return this.favoriteVideos;
     }
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+	
 	
 }
