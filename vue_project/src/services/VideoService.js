@@ -5,7 +5,10 @@ class VideoService {
         return http.get("/videos");
     }
     getVideoById(id){
-        return http.get(`/videos/${id}`)
+        return http.get(`/videos/${id}`);
+    }
+    deleteVideoById(id) {
+        return http.delete(`/videos/${id}`);
     }
 }
 

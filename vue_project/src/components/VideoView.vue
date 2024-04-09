@@ -2,7 +2,6 @@
     <div>
       <h1>Video View Component</h1>
       <div>
-        <h2>youtube video ID: {{ this.youtubeLink }}</h2>
         <VideoPlayer :youtubeLink="youtubeLink" />
       </div>
       <div>        

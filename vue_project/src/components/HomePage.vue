@@ -11,43 +11,65 @@
                 <th>Title</th>
                 <th>Category</th>
                 <th>Author</th>
-                <th>Watch</th>
+                <th v-if="userRole === 'admin'">Delete</th>
+                <th v-if="userRole === 'admin'">Modify</th>
+                <!-- <th v-if="this.currentUser.role =='admin'">Modify</th> -->
               </tr>
             </thead>
             <tbody>
               <tr v-for="(video, index) in videos" :key="index">
-                <td class="table-cover"><span><img :src="video.thumbnail" alt="Thumbnail" /></span></td>
-                <td class="author"><strong> {{ video.title }}</strong></td>
+                <td class="table-cover">
+                  <span><img :src="video.thumbnail" alt="Thumbnail" /></span>
+                </td>
+                <td class="author" @click="toVideo(video.id)">
+                  <a :href="'/video'"
+                    ><strong> {{ video.title }}</strong></a
+                  >
+                </td>
                 <td>{{ video.category.name }}</td>
                 <td>{{ video.author }}</td>
-                <td><button class="detail" @click="toVideo(video.id)">Watch</button></td>
+                <td v-if="userRole == 'admin'">
+                  <button class="detail" @click="deleteVideo(video.id)">
+                    Delete
+                  </button>
+                </td>
+                <td v-if="userRole == 'admin'">
+                  <button class="borrow" @click="modifyVideo()">
+                    Modify
+                  </button>
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
-        
       </section>
       <section class="side">
         <div>
-          <h2 class="book-table-title">This is side part for chosing video by category</h2>
+          <h2 class="book-table-title">
+            This is side part for chosing video by category
+          </h2>
         </div>
       </section>
     </article>
   </div>
 </template>
   
-  <script>
+<script>
 import VideoService from "@/services/VideoService";
+import UserDataService from "@/services/UserDataService";
 
 export default {
   data() {
     return {
       videos: [],
       error: null,
+      currentUser: null,
+      userRole: null,
     };
   },
   mounted() {
     this.getAllVideos();
+    this.fetchCurrentUser();
   },
 
   methods: {
@@ -63,9 +85,35 @@ export default {
           console.error("Error fetching videos:", error);
         });
     },
-    toVideo(id){
-      localStorage.setItem("videoID",id);
-      this.$router.push({name:"videoView"});
+    toVideo(id) {
+      localStorage.setItem("videoID", id);
+      this.$router.push({ name: "videoView" });
+    },
+    fetchCurrentUser() {
+      const uid = localStorage.getItem("uid");
+      UserDataService.get(uid)
+        .then((response) => {
+          this.currentUser = response.data;
+          this.userRole = this.currentUser.role;
+        })
+        .catch((error) => {
+          console.error("Error fetching user:", error);
+        });
+    },
+    modifyVideo(id){
+      localStorage.setItem("videoID", id);
+      this.$router.push({ name: "modifyVideo" });
+    },
+    deleteVideo(id){
+      VideoService.deleteVideoById(id)
+      .then(response =>{
+        this.videos = response.data;
+        console.log("deleted");
+      }).catch (error =>{
+        console.log(error);
+      })
+      this.$router.push({ name: "homePage" });
+
     }
   },
 };
@@ -235,7 +283,6 @@ span img {
   width: 50px;
 }
 
-.book-table a,
 .detail-cancel {
   text-decoration: none;
   color: white;
