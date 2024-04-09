@@ -43,13 +43,18 @@ public class DcFitnessApplication {
 			User yash = new User("YashManiar","BCOne","yashmr@student.douglascollege.ca");
 			
 			userRepo.save(new User("QuanHN","VancouverOne","quanhn@student.douglascollege.ca"));
-			userRepo.save(new User("NamLe","BurnabyOne","namle@student.douglascollege.ca"));
+			userRepo.save(new User("nam","123456","namle@student.douglascollege.ca"));
 			userRepo.save(new User("AungOT","CoquitlamOne","aungot@student.douglascollege.ca"));
 			userRepo.save(new User("YashManiar","BCOne","yashmr@student.douglascollege.ca"));
 			userRepo.save(new User("IvanWong","NewWestminsterOne","ivanw@douglascollege.ca"));
 			userRepo.save(new User("Bambang","ScriptOne","bambang@douglascollege.ca"));
 			userRepo.save(new User("EdwinVk","NedalandOne","edwink@douglascollege.ca"));
 			userRepo.save(new User("Metzel","MetroOne","metrotown@douglascollege.ca"));
+			
+			//admin
+			User admin = new User("admin","admin","admin@gmail.com");
+			admin.setRole("admin");
+			userRepo.save(admin);
 		
 			achRepo.save(new Achievements(1, yash, "Sky-Peeing", "Description 1", "2023-01-01"));
 			achRepo.save(new Achievements(2, yash, "Black Hole Destoyer", "Description 2", "2023-02-02"));

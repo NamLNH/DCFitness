@@ -50,16 +50,9 @@ public class Video {
 	@JoinColumn (name ="category_id", referencedColumnName ="id")
 	private Category category;
 
-//	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-//	@JoinTable(
-//			name = "User_Video",
-//			joinColumns = { @JoinColumn(name = "video_id", referencedColumnName = "id" ) },
-//			inverseJoinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") }
-//	)
-//	private Set<User> users = new HashSet<>();
 	
 	@JsonIgnore
-	@ManyToMany(mappedBy ="favoriteVideos", fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy ="favoriteVideos", fetch = FetchType.LAZY,cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
 	private Set<User> users = new HashSet<>();
 	
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
@@ -77,7 +70,7 @@ public class Video {
 		this.title = title;
 		this.url = url;
 		this.thumbnail ="https://i.ytimg.com/vi/"+url.substring(17, 28)+"/default.jpg";
-		//this.thumbnail = "https://i.ytimg.com/vi/"+url+"/default.jpg";
+		//this.thumbnail = "https://i.ytimg.com/vi/"+url+"/mq3.jpg";
 		this.uploadDate = uploadDate;
 		this.author = author;
 		this.category = category;
