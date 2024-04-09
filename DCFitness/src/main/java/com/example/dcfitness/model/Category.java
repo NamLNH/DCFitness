@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -27,7 +28,7 @@ public class Category {
 	private String name;	
 	
 	@JsonIgnore
-	@OneToMany (mappedBy ="category", fetch = FetchType.LAZY)
+	@OneToMany (mappedBy ="category", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	private Set<Video> videos = new HashSet<>();
 	
 	public Category () {		
@@ -45,12 +46,12 @@ public class Category {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Set<Video> getVideos() {
-		return videos;
-	}
-	public void setVideos(Set<Video> videos) {
-		this.videos = videos;
-	}
+//	public Set<Video> getVideos() {
+//		return videos;
+//	}
+//	public void setVideos(Set<Video> videos) {
+//		this.videos = videos;
+//	}
 	
 	
 }

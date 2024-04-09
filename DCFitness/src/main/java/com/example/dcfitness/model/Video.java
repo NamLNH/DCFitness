@@ -17,6 +17,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -42,20 +43,24 @@ public class Video {
 	private String uploadDate;
 	@Column(name ="author")
 	private String author;
-	@Column(name ="video_id")
+	@Column(name ="youtube_id")
 	private String videoId;
 	
 //	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinColumn (name ="category_id", referencedColumnName ="id")
 	private Category category;
+	
+	@JsonIgnore
+	@OneToMany (mappedBy ="video", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	private Set<Comment> comments = new HashSet<>();
 
 	
 	@JsonIgnore
 	@ManyToMany(mappedBy ="favoriteVideos", fetch = FetchType.LAZY,cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
 	private Set<User> users = new HashSet<>();
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.REMOVE })
 	@JoinTable (
 		name ="video_bodypart",
 		joinColumns = @JoinColumn(name = "video_id", referencedColumnName = "id"),

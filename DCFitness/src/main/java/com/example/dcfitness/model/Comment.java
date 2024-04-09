@@ -37,7 +37,7 @@ public class Comment {
 	private String content;
 
 	//@JsonIgnore
-	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
 	@JoinColumn (name ="video_id",nullable = false, referencedColumnName ="id")
 	private Video video;
 	

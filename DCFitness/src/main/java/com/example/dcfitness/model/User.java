@@ -44,7 +44,7 @@ public class User {
 	private List<Achievements> achievements;
 	
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE })
 	@JoinTable(
 		name = "User_Video",
 		joinColumns = { @JoinColumn(name = "user_id") },
