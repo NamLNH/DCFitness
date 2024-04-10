@@ -22,6 +22,7 @@ import com.example.dcfitness.model.BodyPart;
 import com.example.dcfitness.model.BodyPartRepository;
 import com.example.dcfitness.model.Category;
 import com.example.dcfitness.model.CategoryRepository;
+import com.example.dcfitness.model.Comment;
 import com.example.dcfitness.model.User;
 import com.example.dcfitness.model.Video;
 import com.example.dcfitness.model.VideoRepository;
@@ -152,6 +153,17 @@ public class VideoController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	//add new video to database	
+		@PostMapping("/videos/{categoryId}")
+		public ResponseEntity<Video> addVideo(@PathVariable("categoryId") Long categoryId, @RequestBody Video video) {
+			try {
+				Video newVideo = initNewVideo(categoryRepository,categoryId,video);
+				videoRepository.save(newVideo);
+				return new ResponseEntity<>(newVideo, HttpStatus.OK);
+			} catch (Exception e) {
+				return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
 	
 	public static Video initNewVideo(CategoryRepository categoryRepo, Long categoryId, Video video) {
 		try {
