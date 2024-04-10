@@ -5,11 +5,11 @@ import VideoView from "../components/VideoView.vue";
 import HomePage from "@/components/HomePage.vue";
 import SignUp from "@/components/SignUp.vue";
 import ModifyVideo from "@/components/ModifyVideo.vue";
+import AddVideo from "@/components/AddVideo.vue";
 
 const routes = [
     {
-        path: "/",
-        alias:"/login",
+        path:"/login",
         name:"login",
         component: UserLogin,
         meta: { title: 'DC Fitness' }
@@ -27,7 +27,8 @@ const routes = [
         meta: { title: 'DC Fitness' }
     },
     {
-        path: "/home",
+        path: "/",
+        alias: "/home",
         name: "homePage",
         component: HomePage,
         meta: { titile: 'DC Fitness'}
@@ -43,7 +44,13 @@ const routes = [
         name: "modifyVideo",
         component: ModifyVideo,
         meta: { title: 'DC Fitness'}
-    }
+    },
+    {
+        path: "/addVideo",
+        name: "addVideo",
+        component: AddVideo,
+        meta: { title: 'DC Fitness'}
+    },
 ]
 
 const router = createRouter({

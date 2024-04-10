@@ -1,4 +1,6 @@
 <template>
+    <WebHeader/>
+
   <div>
       <h1>User Login:</h1>
       <form>
@@ -18,6 +20,7 @@
 </template>
 <script>
   import LoginService from "../services/LoginService";
+  import WebHeader from "./WebHeader.vue";
   export default {
       data(){
       return{
@@ -32,7 +35,7 @@
               var user = response.data;
               console.log(user);
               localStorage.setItem("uid",user.id);
-              this.$router.push({name:"userProfile"});
+              this.$router.push({name:"homePage"});
           })
           .catch(e => {
             console.log(e)
@@ -45,6 +48,9 @@
   },
   mounted(){
       this.message = "";
+  },
+  components: {
+    WebHeader
   }
   }
 

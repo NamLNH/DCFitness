@@ -1,4 +1,5 @@
 <template>
+<WebHeader/>
     <div>
         <h1>Please Sign up:</h1>
         <form>
@@ -21,6 +22,7 @@
   </template>
 <script>
   import LoginService from "../services/LoginService";
+import WebHeader from "./WebHeader.vue";
   export default {
     data(){
         return{
@@ -49,6 +51,9 @@
     },
     mounted(){
         this.message = "";
+    },
+    components:{
+        WebHeader
     }
   }
 </script>

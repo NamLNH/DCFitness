@@ -1,8 +1,6 @@
 <template>
-  <div>
-    <div>
-      <router-link to="/" @click="logout"><button>LOGOUT</button></router-link>
-    </div>
+  <WebHeader/>
+    
     <div class="container">
       <h1 v-if="userInsider">Good Day: {{ userInsider.username }}</h1>
       <div class="info">
@@ -10,11 +8,12 @@
         <h4 v-if="userInsider">ID: {{ userInsider.id }}</h4>
       </div>
     </div>    
-  </div>
+  
 </template>
 
 <script>
 import UserDataService from "@/services/UserDataService";
+import WebHeader from "./WebHeader.vue";
 
 
 export default {
@@ -47,6 +46,9 @@ export default {
       event.preventDefault();
       localStorage.removeItem("uid");
     }    
+  },
+  components:{
+    WebHeader
   }
 };
 </script>
