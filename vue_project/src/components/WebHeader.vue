@@ -21,6 +21,7 @@
           <template v-if="currentUser">
             <a class="nav-link active" :href="'/home'">Home</a>
             <a class="nav-link active" :href="'/profile'">Account</a>
+            <a v-if="userRole==='admin'" class="nav-link active" :href="'/addVideo'">Add video</a>
             <a class="nav-link active" :href="'/home'" @click="logout()">Logout</a>
             
           </template>
@@ -42,6 +43,7 @@ export default {
   data() {
     return {
       currentUser: null,
+      userRole: null
     };
   },
   mounted() {
@@ -58,6 +60,7 @@ export default {
       UserDataService.get(uid)
         .then((response) => {
           this.currentUser = response.data;
+          this.userRole = this.currentUser.role;
         })
         .catch((error) => {
           console.error("Error fetching user:", error);

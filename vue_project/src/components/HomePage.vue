@@ -40,7 +40,7 @@
                   </button>
                 </td>
                 <td v-if="userRole == 'admin'">
-                  <button class="borrow" @click="modifyVideo()">
+                  <button class="borrow" @click="modifyVideo(video.id)">
                     Modify
                   </button>
                 </td>
@@ -108,7 +108,7 @@ export default {
         });
     },
     modifyVideo(id){
-      localStorage.setItem("videoID", id);
+      localStorage.setItem('videoID', id);
       this.$router.push({ name: "modifyVideo" });
     },
     deleteVideo(id){

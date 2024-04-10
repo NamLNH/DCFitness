@@ -4,7 +4,7 @@
 
   <!--end of header-->
   <div class="add-title" style="margin-left: 20px; margin-right: 20px">
-    <h2>Modify video</h2>
+    <h2>Modify video</h2>    
   </div>
   <div class="card-body" style="margin-left: 20px; margin-right: 20px">
     <form method="" action="">
@@ -18,7 +18,7 @@
             <div class="col-lg-10 col-md-6 col-sm-12 title-input">
               <input
                 name="name"
-                value=""
+                :value="this.videoTitle"
                 type="text"
                 class="form-control"
                 required
@@ -34,7 +34,7 @@
             <div class="col-lg-10 col-md-6 col-sm-12">
               <input
                 name="isbn"
-                value=""
+                :value="this.videoUrl"
                 type="text"
                 class="form-control"
                 required
@@ -67,7 +67,7 @@
             <div class="col-lg-10 col-md-6 col-sm-12">
               <input
                 name="quantity"
-                value=""
+                :value="this.videoAuthor"
                 type="text"
                 class="form-control"
                 required
@@ -87,30 +87,46 @@
             Update Book
           </button>
         </div>
-        <div class="btn delete-div">
-          <button
-            type="submit"
-            class="btn btn-danger btn-delete"
-            name="action"
-            value="delete"
-          >
-            Delete Book
-          </button>
-        </div>
+        
       </div>
     </form>
   </div>
+  
 </template>
 
 <script>
 import WebHeader from "@/components/WebHeader.vue"
+import VideoService from '@/services/VideoService';
 
 export default {
   data() {
+    return{
+        video: null,
+        videoTitle: null,
+        videoUrl: null,
+        videoAuthor: null,
+        videoCategory: null
+    }  
 
   },
   components :{
     WebHeader
+  },
+  methods: {
+    getVideoById(){
+        const videoID = localStorage.getItem("videoID") ?? 1;
+        VideoService.getVideoById(videoID).then(response =>{
+          this.videoTitle = response.data.title;
+          this.videoUrl = response.data.url;
+          this.videoAuthor = response.data.author;
+
+        }).catch(error =>{
+          console.log(error);
+        })
+    }
+  },
+  mounted(){
+    this.getVideoById();
   }
 };
 </script>
