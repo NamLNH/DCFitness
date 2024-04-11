@@ -13,6 +13,12 @@ class VideoService {
     addVideo(categoryId, body){
         return http.post(`/videos/${categoryId}`,body)
     }
+    getVideosByCategoryId(categoryId){
+        return http.get(`/videos/category/${categoryId}`)
+    }
+    updateVideoByID(videoId, body){
+        return http.put(`/videos/${videoId}`,body)
+    }
 }
 
 export default new VideoService();

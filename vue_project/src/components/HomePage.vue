@@ -1,5 +1,5 @@
 <template>
-  <WebHeader/>
+  <WebHeader />
   <div>
     <article>
       <section class="main">
@@ -22,12 +22,16 @@
                 <td class="table-cover">
                   <span><img :src="video.thumbnail" alt="Thumbnail" /></span>
                 </td>
-                <td v-if="currentUser" class="author" @click="toVideo(video.id)">
+                <td
+                  v-if="currentUser"
+                  class="author"
+                  @click="toVideo(video.id)"
+                >
                   <a :href="'/video'"
                     ><strong> {{ video.title }}</strong></a
                   >
                 </td>
-                <td v-else class="author" >
+                <td v-else class="author">
                   <a
                     ><strong> {{ video.title }}</strong></a
                   >
@@ -51,9 +55,35 @@
       </section>
       <section class="side">
         <div>
-          <h2 class="book-table-title">
-            This is side part for chosing video by category
-          </h2>
+          <h2 class="book-table-title">Filter</h2>
+          <div class="data">
+            <div class="col">
+              <div class="mb-3 row">
+                <label class="col-lg-2 col-md-6 col-sm-12 col-form-label"
+                  >Category:
+                </label>
+                <div class="col-lg-10 col-md-6 col-sm-12">
+                  <select
+                    v-model="this.videoCategory"
+                    class="form-control"
+                    @change="getVideos"
+                    required
+                  >
+                    <option v-bind:value="{ id: 0, name: 'All' }">All</option>
+                    <option
+                      v-for="(category, index) in categories"
+                      :key="index"
+                      v-bind:value="{ id: category.id, name: category.name }"
+                    >
+                      {{ category.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <div>{{ this.videoCategory }}</div>
+          <div>{{ this.switchTest }}</div> -->
         </div>
       </section>
     </article>
@@ -64,6 +94,7 @@
 import VideoService from "@/services/VideoService";
 import UserDataService from "@/services/UserDataService";
 import WebHeader from "./WebHeader.vue";
+import CategoryService from "@/services/CategoryService";
 
 export default {
   data() {
@@ -72,11 +103,17 @@ export default {
       error: null,
       currentUser: null,
       userRole: null,
+      categories: [],
+      videoCategory: null,
+
+      switchTest: null,
     };
   },
   mounted() {
     this.getAllVideos();
     this.fetchCurrentUser();
+    this.getCategories();
+    //this.getVideos();
   },
 
   methods: {
@@ -107,25 +144,71 @@ export default {
           console.error("Error fetching user:", error);
         });
     },
-    modifyVideo(id){
-      localStorage.setItem('videoID', id);
+    modifyVideo(id) {
+      localStorage.setItem("videoID", id);
       this.$router.push({ name: "modifyVideo" });
     },
-    deleteVideo(id){
+    deleteVideo(id) {
       VideoService.deleteVideoById(id)
-      .then(response =>{
-        this.videos = response.data;
-        console.log("deleted");
-      }).catch (error =>{
-        console.log(error);
-      })
+        .then((response) => {
+          this.videos = response.data;
+          console.log("deleted");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       this.$router.push({ name: "homePage" });
+    },
+    getCategories() {
+      CategoryService.getCategories()
+        .then((response) => {
+          this.categories = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getVideos() {
+      if (this.videoCategory != null) {
+        switch (this.videoCategory.id) {
+          case 1:
+            this.switchTest = "category 1";
+            this.getVideoByCategoryId(1);
 
+            break;
+          case 2:
+            this.switchTest = "category 2";
+            this.getVideoByCategoryId(2);
+            break;
+          case 3:
+            this.switchTest = "category 3";
+            this.getVideoByCategoryId(3);
+            break;
+          default:
+            this.switchTest = "All";
+            this.getAllVideos();
+            break;
+        }
+      } else {
+        this.switchTest = "videoCategory.id is null";
+      }
+    },
+    getVideoByCategoryId(categoryId){
+      VideoService.getVideosByCategoryId(categoryId)
+        .then((response) => {
+          console.log(response.data);
+          // this.addVideosToRender(response.data);
+          this.videos = response.data;
+        })
+        .catch((error) => {
+          this.error = error;
+          console.error("Error fetching videos:", error);
+        });
     }
   },
-  components:{
-    WebHeader
-  }
+  components: {
+    WebHeader,
+  },
 };
 </script>
   
