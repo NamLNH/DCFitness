@@ -74,14 +74,40 @@ public class DcFitnessApplication {
 			//String title, String url, String thumbnail, String uploadDate, String author
 			Video video1 = initNewVideo(categoryRepository,Long.parseLong("1"),
 					new Video("20 MIN FULL BODY WORKOUT FOR BEGINNERS",
-					"https://youtu.be/iCQ2gC4DqJw",
-					
+					"https://youtu.be/iCQ2gC4DqJw",					
 					"Nam"));
 			Video video2 = initNewVideo(categoryRepository,Long.parseLong("2"),
 					new Video("10 MINUTE MORNING WORKOUT",
-					"https://youtu.be/3sEeVJEXTfY?list=PLjngT6yRRZHPsjj-CIduSL9FpclppM9qm",
-					
+					"https://youtu.be/3sEeVJEXTfY?list=PLjngT6yRRZHPsjj-CIduSL9FpclppM9qm",					
 					"John"));
+			Video video3 = initNewVideo(categoryRepository,Long.parseLong("1"),
+					new Video("15 MIN BEGINNER CARDIO Workout (At Home No Equipment)",
+					"https://youtu.be/VWj8ZxCxrYk?si=jejGELkkI2QnXmcZ",					
+					"MadFit"));
+			Video video4 = initNewVideo(categoryRepository,Long.parseLong("1"),
+					new Video("15 Minute Full Body Cardio Workout (No Equipment)",
+					"https://youtu.be/IvmaekQfKiw?si=19D8xYVLIJL7y3SX",					
+					"Juice & Toya"));
+			Video video5 = initNewVideo(categoryRepository,Long.parseLong("2"),
+					new Video("6 easy strength training exercises",
+					"https://youtu.be/H1F-UfC8Mb8?si=N6lC6exDfERgFAOS",					
+					"Leo"));
+			Video video6 = initNewVideo(categoryRepository,Long.parseLong("2"),
+					new Video("Full Body Strength Workout With Dumbbells",
+					"https://youtu.be/sinkIlViPG8?si=Nu75c3qDDImb3EeY",					
+					"Heather Robertson"));
+			Video video7 = initNewVideo(categoryRepository,Long.parseLong("3"),
+					new Video("8 Minute Stretching Routine For People Who AREN’T Flexible!",
+					"https://youtu.be/FI51zRzgIe4?si=MBhmx7PYe5UMS9yL",					
+					"Tone & Tighten"));
+			Video video8 = initNewVideo(categoryRepository,Long.parseLong("3"),
+					new Video("15 MIN FULL BODY STRETCH - Improve Mobility and Flexibility",
+					"https://youtu.be/i6TzP2COtow?si=tfhkGav4dQQa0aSF",					
+					"growingannanas"));
+			Video video9 = initNewVideo(categoryRepository,Long.parseLong("3"),
+					new Video("Full Body Yoga for Strength & Flexibility | 25 Minute At Home Mobility Routine",
+					"https://youtu.be/Eml2xnoLpYE?si=LzcdTWVLMEg6JqaC",					
+					"growingannanas"));
 			//https://youtu.be/iCQ2gC4DqJw
 			//https://youtu.be/3sEeVJEXTfY?list=PLjngT6yRRZHPsjj-CIduSL9FpclppM9qm
 			
@@ -91,6 +117,13 @@ public class DcFitnessApplication {
 			try {
 				videoRepository.save(video1);
 				videoRepository.save(video2);
+				videoRepository.save(video3);
+				videoRepository.save(video4);
+				videoRepository.save(video5);
+				videoRepository.save(video6);
+				videoRepository.save(video7);
+				videoRepository.save(video8);
+				videoRepository.save(video9);
 			} catch (Exception e) {
 				System.out.println("error in saving to database");
 				System.out.println(e.getMessage());
