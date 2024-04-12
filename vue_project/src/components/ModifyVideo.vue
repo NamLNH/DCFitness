@@ -108,7 +108,7 @@ export default {
       videoTitle: null,
       videoUrl: null,
       videoAuthor: null,
-      videoCategory: null,
+      videoCategory: {},
       categories: [],
     };
   },

@@ -61,7 +61,7 @@ const router = createRouter({
 
 // Quan findings for meta above:
 router.beforeEach((to) => {
-    document.title = to.meta?.title ?? 'Default Title'
+    document.title = to.meta?.title ?? 'DC Fitness'
   })
 
 export default router;
