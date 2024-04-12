@@ -1,7 +1,13 @@
 <template>
     <div class="comment-section">
       <h2>Comments</h2>
-      <div v-if="comments.length === 0">No comments yet.</div>
+      <div v-if="comments.length === 0">
+        <div>No comments yet.</div>
+        <div class="comment-input">
+          <input v-model="newCommentText" placeholder="Write a comment" />
+          <button @click="insertCommenet">Add Comment</button>
+        </div>
+      </div>
       <ul v-else>
         <div class="comment-input">
           <input v-model="newCommentText" placeholder="Write a comment" />
