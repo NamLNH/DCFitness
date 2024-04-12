@@ -73,9 +73,9 @@ public class DcFitnessApplication {
 			//new videos
 			//String title, String url, String thumbnail, String uploadDate, String author
 			Video video1 = initNewVideo(categoryRepository,Long.parseLong("1"),
-					new Video("20 MIN FULL BODY WORKOUT FOR BEGINNERS",
-					"https://youtu.be/iCQ2gC4DqJw",					
-					"Nam"));
+					new Video("CSIS3275 070 Group 5 project presentation",
+					"https://youtu.be/S1FoMX9mLsc",					
+					"Group 5"));
 			Video video2 = initNewVideo(categoryRepository,Long.parseLong("2"),
 					new Video("10 MINUTE MORNING WORKOUT",
 					"https://youtu.be/3sEeVJEXTfY?list=PLjngT6yRRZHPsjj-CIduSL9FpclppM9qm",					
